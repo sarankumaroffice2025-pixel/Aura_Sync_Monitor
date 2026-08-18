@@ -1,0 +1,16 @@
+{
+  "name": "mdm-consumer-server",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node index.js",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@sap/xsenv": "^5",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "hdb": "^0.19.4"
+  }
+}
