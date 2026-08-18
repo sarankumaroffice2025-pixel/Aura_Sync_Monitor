@@ -1,0 +1,49 @@
+_schema-version: '3.3'
+ID: mdm-dummy-consumer
+version: 1.0.0
+description: Dummy consumer app for MDM -> AEM -> CPI -> Consumer POC (Scenario 2)
+
+modules:
+  - name: mdm-consumer-ui
+    type: staticfile
+    path: client
+    parameters:
+      memory: 64M
+      disk-quota: 256M
+      host: mdm-consumer-ui
+      buildpack: staticfile_buildpack
+    build-parameters:
+      builder: custom
+      commands:
+        - npm install
+        - npm run build
+      build-result: dist
+
+  - name: mdm-consumer-srv
+    type: nodejs
+    path: server
+    parameters:
+      memory: 256M
+      disk-quota: 512M
+      host: mdm-consumer-srv
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: npm
+    requires:
+      - name: mdm-consumer-hdi-db
+
+  - name: mdm-consumer-db-deployer
+    type: hdb
+    path: db
+    parameters:
+      memory: 256M
+      buildpack: nodejs_buildpack
+    requires:
+      - name: mdm-consumer-hdi-db
+
+resources:
+  - name: mdm-consumer-hdi-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared

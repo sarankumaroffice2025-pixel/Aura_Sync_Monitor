@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.env
+mta_archives/
+.*_mta_build_tmp/
+server/public/
